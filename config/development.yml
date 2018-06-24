@@ -1,0 +1,35 @@
+etls:
+  InvoicesSync:
+    source:
+      type: InvoicesSync
+      dbClient: EtlSavePoint
+    transformer:
+      type: InvoicesSync
+      transformerOptions:
+        name: test
+    destination:
+      type: jsonfile
+      directory: /tmp
+      fileName: InvoicesSync.js 
+    savepoint:
+      type: mysql
+      dbClient: EtlSavePoint
+
+mysql:
+  EtlSavePoint: # this is the name of the object that will be exposed in the context
+    master:
+      max: 10
+      min: 1
+      idleTimeoutMillis: 20000
+      maxWaitingClients: 10
+      connectionConfig:
+        charset: utf8
+    slave:
+      max: 10
+      min: 1
+      idleTimeoutMillis: 20000
+      maxWaitingClients: 10
+      connectionConfig:
+        charset: utf8
+Context:
+  ActiveProfiles: production

@@ -1,0 +1,91 @@
+{
+  "name": "clinko-integration",
+  "version": "0.0.1",
+  "description": "Sample implementation for cliniko practice maqnagement solution with Quickbooks online",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "NODE_ENV=test nyc mocha",
+    "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text mocha",
+    "lint": "tslint -p . --type-check",
+    "prepublishOnly": "npm run clean && npm run build && npm test && npm run lint",
+    "precommit": "yarn lint", // && yarn coverage-check",
+    "prepush": "node .checkpush.js",
+    "etl": "node dist/index.js",
+    "coverage-check": "NODE_ENV=test nyc --check-coverage --reporter=lcov --reporter=text --lines 0 mocha"
+  },
+  "directories": {
+    "lib": "dist",
+    "test": "test"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.2",
+    "@types/commander": "^2.9.2",
+    "@types/moment-timezone": "^0.5.0",
+    "@types/object-hash": "^0.5.29",
+    "axios": "^0.16.2",
+    "babel-polyfill": "^6.23.0",
+    "cliniko": "^0.0.31",
+    "commander": "^2.11.0",
+    "cross-fetch": "^1.1.1",
+    "express": "^4.15.3",
+    "inceptum-etl": "^0.10.0",
+    "lodash": "^4.17.4",
+    "ltrim": "~1.0.0",
+    "moment": "2.18.1",
+    "moment-timezone": "^0.5.13",
+    "object-hash": "^1.1.8"
+  },
+  "devDependencies": {
+    "@types/node": "8.0.32",
+    "@types/sinon": "^2.3.3",
+    "@types/source-map-support": "^0.4.0",
+    "co-mocha": "^1.1.2",
+    "codecov": "^2.2.0",
+    "doubleagent": "^1.1.0",
+    "husky": "^0.14.3",
+    "mocha": "^4.0.0",
+    "mocha-lcov-reporter": "^1.2.0",
+    "mocha-typescript": "^1.1.2",
+    "must": "^0.13.2",
+    "nyc": "^12.0.2",
+    "sinon": "^4.0.1",
+    "ts-node": "4.0.1",
+    "tslint": "^5.10.0",
+    "tslint-config-shopify": "^3.0.1",
+    "typedoc": "^0.8.0",
+    "typedoc-clarity-theme": "^1.1.0",
+    "typescript": "2.6.1"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "engine": {
+    "node": ">7.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": "git@github.com:deepaknverma/clinko-integration.git",
+  "author": "deepaknverma <deepakverma@hipagesgroup.com.au>",
+  "license": "MIT",
+  "private": true
+}

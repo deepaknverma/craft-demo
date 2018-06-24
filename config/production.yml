@@ -1,0 +1,12 @@
+
+logging:
+  streams:
+    console:
+      type: console
+    json:
+      type: json
+  loggers:
+    - name: ROOT
+      streams:
+        console: off
+        json: warn

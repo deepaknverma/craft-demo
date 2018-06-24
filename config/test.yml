@@ -1,0 +1,257 @@
+app:
+  name: trench
+  validEtls:
+    - test_1
+    - test_2
+    - test_3
+    - test_4
+    - test_5
+    - test_6
+    - test_8
+    - test_9
+    - test_10
+    - test_11
+    - test_12
+
+generalConfig:
+  source:
+    maxRetries: 3
+    timeoutMillis: 5000
+  transformers:
+    minSuccessPercentage: 1
+    timeoutMillis: 5000
+  destinations:
+    maxRetries: 3
+    timeoutMillis: 5000
+    batchSize: 1
+
+etls:
+  test_8:
+    savepoint: 
+      type: 'static'
+      savepoint: '{}'
+    source: 
+      type: revRec
+      sourceDbClient: Hip
+      destinationDbClient: EtlSavePoint        
+    transformer:
+      type: revRec
+      transformerOptions:
+        rules:
+          - key: end_date
+            conditions:
+            - field: productId
+              comparison: in
+              value:
+              - 10604
+              - 10686
+              expected: true
+            - field: amount
+              comparison: equal
+              value: 72.69
+              expected: true
+            action: incementDate
+            field: start_date
+            interval: 1
+            type: months
+            criteria: and
+          - key: end_date
+            conditions:
+            - field: productId
+              comparison: in
+              value:
+              - 10604
+              - 10686
+              expected: true
+            - field: end_date
+              comparison: equal
+              value: '2016-06-30T00:00:00.000Z'
+              expected: false
+            action: incementDate
+            field: start_date
+            interval: 1
+            type: months
+            criteria: or        
+    destination:
+      type: mysql
+      destinationDbClient: EtlSavePoint      
+
+  test_9:
+    savepoint: 
+      type: 'static'
+      savepoint: '{}'
+    source: 
+      type: 'elasticCategorySource'
+      dbL: "#dsdasda"
+    transformer:
+      type: 'elasticCategoryTransformer'
+    destination:
+      type: 'elasticBulkDestination'
+
+  test_10:
+    savepoint:
+      type: 'static'
+      savepoint: '{"currentId": 175,"endId": 300}'
+    source:
+      type: 'elasticBusinessSource'
+      mysql: Hip
+      elasticsearch: Elastic
+    transformer:
+      type: 'elasticBusinessTransformer'
+    destination:
+      type: 'elasticBulkDestination'
+
+  test_11:
+    source:
+      type: appsflyerreports
+      sourceOptions:
+        apiAccess: https://hq.appsflyer.com/export/id369786244/installs_report/v5?api_token=some-key&from={startDate}&to={endDate}
+        pace: 1
+    transformer:
+      type: simplecopy
+      available: true
+    destination:
+      type: csvfile
+      directory: /Users/techdev3/src/trench/tmp/appl
+      fileName: android_
+      cleanUpDirectory : False
+    savepoint:
+      type: static
+      savepoint: '{"startDate":"2017-07-31","endDate":"2017-08-01"}'
+
+  test_12:
+    transformer:
+      type: extendedsmartfieldmapping
+      tempDirectory: /tmp
+      bucket: /
+      fieldsMapping:
+        ad_group: 
+          action: splitAdwordsAdgroup
+          field: ad_group
+          adgroupFields:
+            category: category
+            category_id: categoryId
+            sub_category: subCategory
+            sub_category_id: subCategoryId
+            state: recordState
+            location: location
+            location_type: locationType
+            adgroup_match: adgroupMatch
+            keyword_match: "keywordMatch"
+            postcode: postcode
+
+sources:
+  mysqldatabykey:
+    test_1:
+      dbClient: GA
+      sourceOptions:
+        tableName: job_table
+        searchColumn: job_id  
+    test_4:
+      dbClient: GA
+      sourceOptions:
+        tableName: landing_pages_table
+        searchColumn: id  
+        searchColumnDataType: number
+        pk: id  
+  SyncFactGqJob:
+    test_5:
+      dbClient: GA
+      sourceOptions:
+        tableName: job_table
+        searchColumn: job_id  
+        searchColumnDataType: number
+        pk: job_id 
+  SyncFactGqJobOnGoing:
+    test_6:
+      dbClient: GA
+      sourceOptions:
+        tableName: job_table
+        searchColumn: job_id  
+        searchColumnDataType: number
+        pk: job_id 
+
+transformers:
+  gatransactions:
+    test_1:
+      transformerOptions:
+        fieldsMapping:
+          job_id: job_id
+          partner_job_id: partner_job_id
+          transaction_id: transactionId
+          campaign: campaign
+          source: source
+          ad_group: adGroup
+          medium: medium
+          keyword: keyword
+          landing_page_path: landingPagePath
+          ad_matched_query: adMatchedQuery
+          device_category: deviceCategory
+          browser: browser
+          browser_version: browserVersion
+          browser_size: browserSize
+        keyStringPart: JOB
+        newIdFields:
+          - job_id
+          - partner_job_id
+  galandingpages:
+    test_2:
+      dbClient: dwRedshift
+      fieldsMapping: 
+        app_code: app_code
+        source_name: source_name
+        landingPagePath: landing_page_path
+        source_account: source_account
+        source_time_zone: source_time_zone
+        report_date: report_date
+        medium: medium
+        source: source
+        region: region
+        campaign: campaign
+        deviceCategory: device_category
+        adGroup: adgroup
+        landingContentGroup5: landing_content_group5
+        sessions: sessions
+        percentNewSessions: percent_new_sessions
+        organicSearches: organic_searches
+        goal1Completions: goal_1_completions
+        goal15Completions: goal_15_completions
+        pageviews: page_views
+        record_created_date: record_created_date
+    
+  noexistingtransformer:
+    test_3:
+      param: false
+
+destinations:
+  csvfile:
+    test_1:
+      directory: .
+      fileName: test_1
+      cleanUpDirectory : false
+
+savepoints:
+  static:
+    test_1:
+      savepoint: '{"columnStartValue":3656974,"columnEndValue":3656975,"batchSize":10,"currentBatch":0,"totalBatches":1,"currentDate":"2017-08-28T17:42:41.349Z"}'
+    test_4:
+      savepoint: '{"columnStartValue":1,"columnEndValue":1500,"batchSize":500,"currentBatch":0,"totalBatches":0,"currentDate":"2017-09-26T23:57:13.560Z"}'
+    test_5:
+      savepoint: '{"lastRunStartTime":"2017-09-26T23:57:13.560Z"}'
+
+logging:
+  streams:
+    console:
+      type: console
+    myredis:
+      type: redis
+      host: logstash-redis.devops.svc.cluster.local
+    mainLogFile:
+      type: file
+      path: main.log
+  loggers:
+    - name: ROOT
+      streams:
+        console: error
+        #myredis: debug
+        mainLogFile: error

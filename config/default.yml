@@ -1,0 +1,72 @@
+app:
+  name: Cliniko-Datasync
+  validEtls:
+    - InvoicesSync
+
+generalConfig:
+  source:
+    maxRetries: 3
+    timeoutMillis: 5000
+  transformers:
+    minSuccessPercentage: 1
+    timeoutMillis: 5000
+  destinations:
+    maxRetries: 3
+    timeoutMillis: 5000
+    batchSize: 1
+
+etls:
+  InvoicesSync:
+    source:
+      type: mysql
+      dbClient: EtlSavePoint
+    
+    transformer:
+      type: InvoicesSync
+      transformerOptions:
+        name: test
+    destination:
+      type: jsonfile
+      directory: /tmp
+      fileName: InvoicesSync.js 
+    savepoint:
+      type: mysql
+      dbClient: EtlSavePoint
+ 
+mysql:
+  EtlSavePoint: # this is the name of the object that will be exposed in the context
+    master:
+      max: 10
+      min: 1
+      connectionConfig:
+        charset: utf8
+        host: localhost
+        # port: 3306
+        user: root
+        password: hipages
+        database: qbo        
+    slave:
+      max: 10
+      min: 1
+      connectionConfig:
+        charset: utf8
+        host: localhost
+        # port: 3306
+        user: root
+        password: hipages
+        database: qbo        
+
+logging:
+  streams:
+    console:
+      type: console
+    json:
+      type: json
+  loggers:
+    - name: ROOT
+      streams:
+        console: debug
+        json: off
+
+Context:
+  ActiveProfiles: production

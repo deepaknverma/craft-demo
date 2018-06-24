@@ -1,0 +1,33 @@
+etls:
+  InvoicesSync:
+    source:
+      type: mysql
+      dbClient: EtlSavePoint
+    transformer:
+      type: InvoicesSync
+      transformerOptions:
+        name: test
+    destination:
+      type: jsonfile
+      directory: /tmp
+      fileName: InvoicesSync.js 
+    savepoint:
+      type: mysql
+      dbClient: EtlSavePoint
+
+mysql:
+  EtlSavePoint:
+    master:
+      connectionConfig:
+        host: localhost
+        # port: 3306
+        user: root
+        password: hipages
+        database: qbo
+    slave:
+      connectionConfig:
+        host: localhost
+        # port: 3306
+        user: root
+        password: hipages
+        database: qbo
