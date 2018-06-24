@@ -1,0 +1,10 @@
+TxnDate,RefNumber,Memo,Debit,Credit,AccountFullName,ItemSalesTaxRefFullName,Allocation Memo
+24/06/2018,OM654,Sales for finance shift:654,221.25,,Undeposited Funds,,Payment: Case in Cash Drawer:CD1-Downstairs
+24/06/2018,OM654,Sales for finance shift:654,154.5,,Bistro Income,,Payment: Adjustment in Cash Drawer:CD1-Downstairs
+24/06/2018,OM654,,,357,Bar Income,GST,Sales: Fast Bar. Location: Downstairs
+24/06/2018,OM654,,,145.64,Bar Income,GST,Sales: Fast Bar. Location: Downstairs
+24/06/2018,OM654,Sales for finance shift:654,163,,Undeposited Funds,,Payment: Case in Cash Drawer:CD1-Downstairs
+24/06/2018,OM654,,,180,Bar Income,GST,Sales: Fast Bar. Location: Downstairs
+24/06/2018,OM654,Sales for finance shift:654,14.47,,Bistro Income,,Payment: Adjustment in Cash Drawer:CD1-Downstairs
+24/06/2018,OM654,Sales for finance shift:654,265.6,,Bistro Income,,Payment: Adjustment in Cash Drawer:CD1-Downstairs
+24/06/2018,OM654,,,145.04,Bar Income,GST,Sales: Fast Bar. Location: Downstairs

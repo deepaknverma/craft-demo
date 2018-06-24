@@ -1,7 +1,7 @@
 app:
   name: Cliniko-Datasync
   validEtls:
-    - InvoicesSync
+    - ExpensesSync
 
 generalConfig:
   source:
@@ -16,19 +16,19 @@ generalConfig:
     batchSize: 1
 
 etls:
-  InvoicesSync:
+  ExpensesSync:
     source:
       type: mysql
       dbClient: EtlSavePoint
     
     transformer:
-      type: InvoicesSync
+      type: ExpensesSync
       transformerOptions:
         name: test
     destination:
       type: jsonfile
       directory: /tmp
-      fileName: InvoicesSync.js 
+      fileName: ExpensesSync.js 
     savepoint:
       type: mysql
       dbClient: EtlSavePoint

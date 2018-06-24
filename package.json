@@ -11,9 +11,9 @@
     "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text mocha",
     "lint": "tslint -p . --type-check",
     "prepublishOnly": "npm run clean && npm run build && npm test && npm run lint",
-    "precommit": "yarn lint", // && yarn coverage-check",
+    "precommit": "yarn lint && yarn coverage-check",
     "prepush": "node .checkpush.js",
-    "etl": "node dist/index.js",
+    "etl": "tsc && node dist/index.js",
     "coverage-check": "NODE_ENV=test nyc --check-coverage --reporter=lcov --reporter=text --lines 0 mocha"
   },
   "directories": {

@@ -1,16 +1,18 @@
 etls:
-  InvoicesSync:
+  ExpensesSync:
     source:
-      type: InvoicesSync
+      type: ExpensesSync
       dbClient: EtlSavePoint
+      sourceOptions: 
+        fileDir: csv/
     transformer:
-      type: InvoicesSync
+      type: ExpensesSync
       transformerOptions:
         name: test
     destination:
       type: jsonfile
       directory: /tmp
-      fileName: InvoicesSync.js 
+      fileName: ExpensesSync.js 
     savepoint:
       type: mysql
       dbClient: EtlSavePoint

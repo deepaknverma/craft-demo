@@ -1,0 +1,11 @@
+FROM node:8.2-alpine
+
+LABEL maintainer "Deepak verma <info@deepakverma.com.au>"
+
+RUN apk add --no-cache bash curl
+
+COPY ./build/docker-* /usr/local/bin/
+COPY ./ /var/www/html/
+
+WORKDIR /var/www/html
+ENTRYPOINT ["docker-entrypoint"]

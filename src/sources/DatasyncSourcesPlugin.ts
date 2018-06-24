@@ -14,24 +14,28 @@ export class DatasyncSourcePlugin extends SourcePlugin {
         case 'InvoicesSync':
           {
             const singletonDefinition = new BaseSingletonDefinition<any>(InvoicesSource, 'EtlSource');
+            singletonDefinition.constructorParamByValue(sourceConfig['sourceOptions']);
             context.registerSingletons(singletonDefinition);
           }
           break;
         case 'ExpensesSync':
           {
             const singletonDefinition = new BaseSingletonDefinition<any>(ExpensesSource, 'EtlSource');
+            singletonDefinition.constructorParamByValue(sourceConfig['sourceOptions']);
             context.registerSingletons(singletonDefinition);
           }
           break;
         case 'ProductsSync':
           {
             const singletonDefinition = new BaseSingletonDefinition<any>(ProductsSource, 'EtlSource');
+            singletonDefinition.constructorParamByValue(sourceConfig['sourceOptions']);
             context.registerSingletons(singletonDefinition);
           }
           break;
         case 'PaymentsSync':
           {
             const singletonDefinition = new BaseSingletonDefinition<any>(PaymentsSource, 'EtlSource');
+            singletonDefinition.constructorParamByValue(sourceConfig['sourceOptions']);
             context.registerSingletons(singletonDefinition);
           }
           break;
