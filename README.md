@@ -41,5 +41,5 @@ CREATE TABLE `etls_savepoint` (
 
 ## Architecture
 
-![Craft Demo](./Craft Demo V1.jpeg)
+![Craft Demo](./Craft-Demo-V1.jpeg)
 
