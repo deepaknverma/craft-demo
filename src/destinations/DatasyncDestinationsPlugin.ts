@@ -19,6 +19,7 @@ export class DatasyncDestinationPlugin extends DestinationPlugin {
         case 'ExpensesSync':
           {
             const singletonDefinition = new BaseSingletonDefinition<any>(ExpensesDestination, this.getEtlObjectName());
+            singletonDefinition.constructorParamByValue(destinationConfig['destinationOptions']);
             context.registerSingletons(singletonDefinition);
           }
           break;

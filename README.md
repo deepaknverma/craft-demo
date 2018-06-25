@@ -1,4 +1,4 @@
-# [Craft-Demo]() Craft Demo
+# [Craft-Demo]()
 
 Sample implementation for integration of ordermate with quickbooks online
 
@@ -42,4 +42,13 @@ CREATE TABLE `etls_savepoint` (
 ## Architecture
 
 ![Craft Demo](./Craft-Demo-V1.jpeg)
+
+## Current Flow
+![Current flow](./current-flow.jpeg)
+
+Current implementation is an ETL process where:
+
+** Source: is responsible for fetching data from the vendor API. (currently implemented using CSV file)
+** Transformation: is responsible for transforming vendor data into qbo compatible format.
+** destination: is responsible for pushing data into Quickbooks online
 

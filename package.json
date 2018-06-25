@@ -36,6 +36,7 @@
     "ltrim": "~1.0.0",
     "moment": "2.18.1",
     "moment-timezone": "^0.5.13",
+    "node-quickbooks": "^2.0.24",
     "object-hash": "^1.1.8"
   },
   "devDependencies": {
