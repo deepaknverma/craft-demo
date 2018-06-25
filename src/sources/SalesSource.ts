@@ -12,7 +12,7 @@ export interface ISavePoint {
   [key: string]: any,
 }
 
-export default class ExpensesSource extends EtlSource {
+export default class SalesSource extends EtlSource {
   protected files: Array<string>;
   protected fileDir: string;
   protected fileName: string;

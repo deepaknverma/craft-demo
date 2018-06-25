@@ -1,7 +1,7 @@
 import { SourcePlugin } from 'inceptum-etl';
 import { LogManager, Context, InceptumApp, BaseSingletonDefinition } from 'inceptum';
 import InvoicesSource from './InvoicesSource';
-import ExpensesSource from './ExpensesSource';
+import SalesSource from './SalesSource';
 import ProductsSource from './ProductsSource';
 import PaymentsSource from './PaymentsSource';
 
@@ -18,9 +18,9 @@ export class DatasyncSourcePlugin extends SourcePlugin {
             context.registerSingletons(singletonDefinition);
           }
           break;
-        case 'ExpensesSync':
+        case 'SalesSync':
           {
-            const singletonDefinition = new BaseSingletonDefinition<any>(ExpensesSource, 'EtlSource');
+            const singletonDefinition = new BaseSingletonDefinition<any>(SalesSource, 'EtlSource');
             singletonDefinition.constructorParamByValue(sourceConfig['sourceOptions']);
             context.registerSingletons(singletonDefinition);
           }

@@ -1,7 +1,7 @@
 app:
   name: Craft-Demo
   validEtls:
-    - ExpensesSync
+    - SalesSync
 
 generalConfig:
   source:
@@ -16,19 +16,19 @@ generalConfig:
     batchSize: 1
 
 etls:
-  ExpensesSync:
+  SalesSync:
     source:
       type: mysql
       dbClient: EtlSavePoint
     
     transformer:
-      type: ExpensesSync
+      type: SalesSync
       transformerOptions:
         name: test
     destination:
       type: jsonfile
       directory: /tmp
-      fileName: ExpensesSync.js 
+      fileName: SalesSync.js 
     savepoint:
       type: mysql
       dbClient: EtlSavePoint

@@ -1,7 +1,7 @@
 import { DestinationPlugin } from 'inceptum-etl';
 import { LogManager, Context, BaseSingletonDefinition } from 'inceptum';
 import InvoicesDestination from './InvoicesDestination';
-import ExpensesDestination from './ExpensesDestination';
+import SalesDestination from './SalesDestination';
 import ProductsDestination from './ProductsDestination';
 import PaymentsDestination from './PaymentsDestination';
 
@@ -16,9 +16,9 @@ export class DatasyncDestinationPlugin extends DestinationPlugin {
             context.registerSingletons(singletonDefinition);
           }
           break;
-        case 'ExpensesSync':
+        case 'SalesSync':
           {
-            const singletonDefinition = new BaseSingletonDefinition<any>(ExpensesDestination, this.getEtlObjectName());
+            const singletonDefinition = new BaseSingletonDefinition<any>(SalesDestination, this.getEtlObjectName());
             singletonDefinition.constructorParamByValue(destinationConfig['destinationOptions']);
             context.registerSingletons(singletonDefinition);
           }

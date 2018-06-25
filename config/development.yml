@@ -1,16 +1,16 @@
 etls:
-  ExpensesSync:
+  SalesSync:
     source:
-      type: ExpensesSync
+      type: SalesSync
       dbClient: EtlSavePoint
       sourceOptions: 
         fileDir: csv/
     transformer:
-      type: ExpensesSync
+      type: SalesSync
       transformerOptions:
         name: test
     destination:
-      type: ExpensesSync
+      type: SalesSync
       destinationOptions:
         consumerKey: Q0ACHcPD7nTuKQyUNfjIpId3tT17vR4wwaNIYhqbFBUPCUA5ub
         consumerSecret: DJTIiIusl6jSOMuARX6JgKJiyS1motzJwCMsm80q
