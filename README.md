@@ -44,7 +44,7 @@ CREATE TABLE `etls_savepoint` (
 ![Craft Demo](./Craft-Demo-V1.jpeg)
 
 ## Current Flow
-![Current flow](./current-flow.jpeg)
+![Current flow](./current-flow.jpg)
 
 Current implementation is an ETL process where:
 
