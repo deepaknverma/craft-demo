@@ -1,7 +1,7 @@
 {
-  "name": "clinko-integration",
+  "name": "Craft-Demo",
   "version": "0.0.1",
-  "description": "Sample implementation for cliniko practice maqnagement solution with Quickbooks online",
+  "description": "Sample implementation for craft demo. Integration of ordermate with Quickbooks online",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
