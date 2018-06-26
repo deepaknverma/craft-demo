@@ -21,8 +21,10 @@ yarn run etl SalesSync
 ## Deployment requirements
 
 - Language: typescript
+
 - requires: NODEJS ^v.7.9.0
-- AWS keys in .aws/credetials OR environment variables
+
+  
 
 ### ENVIRONMENT VARIABLES
 ```
@@ -31,7 +33,7 @@ NODE_ENV=production
 
 ### Changes in config/production.yml
 ```
-- ExpensesSync ETL
+- SalesSync ETL
 ```
 
 ## Tables for storing etl savepoints
@@ -56,7 +58,8 @@ CREATE TABLE `etls_savepoint` (
 
 Current implementation is an ETL process where:
 
-** Source: is responsible for fetching data from the vendor API. (currently implemented using CSV file)
-** Transformation: is responsible for transforming vendor data into qbo compatible format.
-** destination: is responsible for pushing data into Quickbooks online
+- **Source:** is responsible for fetching data from the vendor API. (currently implemented using CSV file)
+
+- **Transformation:** is responsible for transforming vendor data into qbo compatible format.
+- **Destination:** is responsible for pushing data into Quickbooks online
 
