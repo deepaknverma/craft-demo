@@ -1,5 +1,8 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as request from 'request-promise';
 import * as QuickBooks from 'node-quickbooks';
+import { Json2csvParser } from 'json2csv';
 import { LogManager } from 'inceptum';
 import { EtlBatch, EtlDestination, EtlState } from 'inceptum-etl';
 import { JournalEntry } from '../types/JournalEntry';
@@ -63,13 +66,14 @@ export default class SalesDestination extends EtlDestination {
       if (currentBatch.length > 0) {
         const transactionsToUpload = currentBatch.map((record) => record.getTransformedData() as JournalEntry);
 
-        transactionsToUpload.map((record: JournalEntry) => {
-          const newRecord = record;
-          newRecord.JournalEntryLineDetail.PostingType = (record.JournalEntryLineDetail.PostingType === 'Credit') ? 'Debit' : 'Credit';
-          this.qbo.createJournalEntry({
-            Line: [record, newRecord],
-          });
-        });
+        // transactionsToUpload.map((record: JournalEntry) => {
+        //   const newRecord = record;
+        //   newRecord.JournalEntryLineDetail.PostingType = (record.JournalEntryLineDetail.PostingType === 'Credit') ? 'Debit' : 'Credit';
+        //   this.qbo.createJournalEntry({
+        //     Line: [record, newRecord],
+        //   });
+        // });
+        fs.writeFileSync(path.join(__dirname, `../../csv/outputfiles/${Date.now()}.json`), transactionsToUpload);
         log.debug(transactionsToUpload);
         // createJournalEntry
         log.debug('Finsihed processing the batch');
