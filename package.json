@@ -32,6 +32,7 @@
     "inceptum-etl": "^0.10.0",
     "lodash": "^4.17.4",
     "ltrim": "~1.0.0",
+    "moment": "^2.22.2",
     "node-quickbooks": "^2.0.24",
     "request-promise": "^4.2.2"
   },
