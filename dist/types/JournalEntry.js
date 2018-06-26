@@ -14,7 +14,7 @@ exports.JournalEntryLineDetail = JournalEntryLineDetail;
 class JournalEntry {
     accountRef(obj) {
         return {
-            value: (accountType.hasOwnProperty(obj['AccountFullName'])) ? accountType[obj['AccountFullName']] : 187,
+            value: (accountType.hasOwnProperty(obj['AccountFullName'])) ? accountType[obj['AccountFullName']].toString() : '187',
             name: obj['AccountFullName'],
         };
     }
@@ -27,8 +27,8 @@ class JournalEntry {
     toQboObject(obj) {
         const instance = new JournalEntry();
         instance.Description = obj['Allocation Memo'];
-        instance.Amount = (obj['Credit']) ? obj['Credit'] : obj['Debit'];
-        instance.DetailType = obj['Memo'];
+        instance.Amount = (obj['Credit']) ? Number(obj['Credit']) : Number(obj['Debit']);
+        instance.DetailType = 'JournalEntryLineDetail';
         instance.JournalEntryLineDetail = this.journalEntryLine(obj);
         return instance;
     }

@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const request = require("request-promise");
 const QuickBooks = require("node-quickbooks");
 const inceptum_1 = require("inceptum");
 const inceptum_etl_1 = require("inceptum-etl");
@@ -16,21 +17,59 @@ class SalesDestination extends inceptum_etl_1.EtlDestination {
     constructor(config) {
         super();
         this.qbo = QuickBooks;
-        this.qbo = new QuickBooks(config.consumerKey, config.consumerSecret, config.oauthToken, config.oauthTokenSecret, config.realmId, true, // use the sandbox?
-        true);
+        this.config = Object.assign({}, config);
+    }
+    generateToken() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const auth = (new Buffer(`${this.config.consumerKey}:${this.config.consumerSecret}`).toString('base64'));
+                const res = yield request.post({
+                    url: 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        Authorization: `Basic ${auth}`,
+                    },
+                    form: {
+                        grant_type: 'refresh_token',
+                        refresh_token: 'L011538735469jImcGIu44Na0ERFrUl9iQ4inoweByn4R1zlyj',
+                    },
+                });
+                const obj = JSON.parse(res);
+                this.config.oauthToken = obj['access_token'];
+            }
+            catch (e) {
+                log.error(e);
+            }
+        });
+    }
+    initialiseQboObject() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.generateToken();
+            if (this.qbo) {
+                this.qbo = new QuickBooks(this.config.consumerKey, this.config.consumerSecret, this.config.oauthToken, /* oAuth access token */ false, /* no token secret for oAuth 2.0 */ this.config.realmId, true, /* use a sandbox account */ true, /* turn debugging on */ 4, /* minor version */ '2.0', /* oauth version */ this.config.refreshToken);
+            }
+        });
     }
     store(batch) {
         return __awaiter(this, void 0, void 0, function* () {
-            const self = this;
+            yield this.initialiseQboObject();
             try {
                 const currentBatch = batch.getTransformedRecords();
                 log.info(`Executing ${currentBatch.length} operations`);
                 if (currentBatch.length > 0) {
                     const transactionsToUpload = currentBatch.map((record) => record.getTransformedData());
-                    this.qbo.createJournalEntry(transactionsToUpload);
+                    transactionsToUpload.map((record) => {
+                        const newRecord = record;
+                        newRecord.JournalEntryLineDetail.PostingType = (record.JournalEntryLineDetail.PostingType === 'Credit') ? 'Debit' : 'Credit';
+                        this.qbo.createJournalEntry({
+                            Line: [record, newRecord],
+                        });
+                    });
+                    log.debug(transactionsToUpload);
                     // createJournalEntry
-                    log.debug('Finsihed processing the batch', transactionsToUpload);
-                    self.batchStatus = true;
+                    log.debug('Finsihed processing the batch');
+                    this.batchStatus = true;
                 }
                 else {
                     /* istanbul ignore next */

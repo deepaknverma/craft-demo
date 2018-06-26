@@ -1,8 +1,9 @@
-export interface QboConfig {
-  consumerKey: string,
-  consumerSecret: string,
-  oauthToken: string,
-  oauthTokenSecret: string,
-  realmId: string,
-  minorversion: string,
+export class QboConfig {
+  consumerKey: string;
+  consumerSecret: string;
+  oauthToken: string;
+  oauthTokenSecret: string;
+  realmId: string;
+  minorversion: string;
+  refreshToken: string;
 }

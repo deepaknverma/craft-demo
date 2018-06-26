@@ -20,7 +20,7 @@ export class JournalEntry {
 
   accountRef(obj: object): AccountRef {
     return {
-      value: (accountType.hasOwnProperty(obj['AccountFullName'])) ? accountType[obj['AccountFullName']] : 187,
+      value: (accountType.hasOwnProperty(obj['AccountFullName'])) ? accountType[obj['AccountFullName']].toString() : '187',
       name: obj['AccountFullName'],
     };
   }
@@ -35,8 +35,8 @@ export class JournalEntry {
   toQboObject(obj: object): JournalEntry {
     const instance = new JournalEntry();
     instance.Description = obj['Allocation Memo'];
-    instance.Amount = (obj['Credit']) ? obj['Credit'] : obj['Debit'];
-    instance.DetailType = obj['Memo'];
+    instance.Amount = (obj['Credit']) ? Number(obj['Credit']) : Number(obj['Debit']);
+    instance.DetailType = 'JournalEntryLineDetail';
     instance.JournalEntryLineDetail = this.journalEntryLine(obj);
     return instance;
   }

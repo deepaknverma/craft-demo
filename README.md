@@ -2,12 +2,20 @@
 
 Sample implementation for integration of ordermate with quickbooks online
 
+## Install
+```
+yarn install
+```
+
 ## TL;DR
 ```
+$ node dist/index.js SalesSync
 $ node dist/index.js InvoicesSync
-$ node dist/index.js ExpensesSync
-$ node dist/index.js ProductsSync
-$ node dist/index.js PaymentsSync
+```
+
+## run yarn way
+```
+yarn run etl SalesSync
 ```
 
 ## Deployment requirements
